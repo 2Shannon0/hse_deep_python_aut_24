@@ -1,5 +1,6 @@
 import unittest
-from index import predict_message_mood
+from message_rating_function import predict_message_mood
+
 
 class TestPredictMassageMood(unittest.TestCase):
     def test1_get_norm(self):
@@ -28,6 +29,5 @@ class TestPredictMassageMood(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
     def test6_bad_thresholds_greater_than_good(self):
-        with self.assertRaises(ValueError) as context:
-            predict_message_mood("Чапаев и пустота", 0.9, 0.5, 5)  
-        
+        with self.assertRaises(ValueError):
+            predict_message_mood("Чапаев и пустота", 0.9, 0.5, 5)

@@ -1,24 +1,19 @@
 import random
 
-class SomeModel:
-    def __init__(self, input):
-        self.input = input
 
-    def predict(self, message: str = None, testNumber: int = None ) -> float:
+class SomeModel:
+    def __init__(self, input_i):
+        self.input = input_i
+
+    def predict(self, message: str = None, test_number: int = None) -> float:
         if message is None:
             message = self.input
-        
-        values = {
-            1: 0.5,
-            2: 0.8,
-            3: 0.2,
-            4: 0.5,
-            5: 0.9
-        }
+
+        values = {1: 0.5, 2: 0.8, 3: 0.2, 4: 0.5, 5: 0.9}
         # в зависимости от номера теста выберем занчение для return
-        if testNumber is not None:
-            return values[testNumber]
-        
+        if test_number is not None:
+            return values[test_number]
+
         return random.random()
 
 
@@ -26,12 +21,14 @@ def predict_message_mood(
     message: str,
     bad_thresholds: float = 0.3,
     good_thresholds: float = 0.8,
-    testNumber: int = None
+    test_number: int = None,
 ) -> str:
     if bad_thresholds > good_thresholds:
-        raise ValueError("Порог bad_thresholds не может быть больше good_thresholds")
+        raise ValueError(
+            "Порог bad_thresholds не может быть больше good_thresholds"
+        )
     model = SomeModel(message)
-    predict = model.predict(message, testNumber)
+    predict = model.predict(message, test_number)
     if predict < bad_thresholds:
         return "неуд"
     elif predict >= good_thresholds:

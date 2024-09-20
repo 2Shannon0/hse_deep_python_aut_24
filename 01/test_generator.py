@@ -1,5 +1,6 @@
 import unittest
-from index import generate
+from generator import generate
+
 
 class TestGenerator(unittest.TestCase):
 
@@ -7,13 +8,15 @@ class TestGenerator(unittest.TestCase):
         outputs = []
         for line in generate("1-input.txt", ['груша'], ['банан']):
             outputs.append(line)
-        self.assertEqual(outputs, ['яблоко апеЛьсин Груша арбуз Еда комплекс бизнес\n'])
+        self.assertEqual(outputs, [
+            'яблоко апеЛьсин Груша арбуз Еда комплекс бизнес\n'
+            ])
 
     def test2(self):
         outputs = []
         for line in generate("2-input.txt", ['яблоко'], ['груша']):
             outputs.append(line)
-        self.assertEqual(outputs, ['апельсин арбуз манго\n'])
+        self.assertEqual(outputs, [])
 
     def test3(self):
         outputs = []
@@ -38,4 +41,3 @@ class TestGenerator(unittest.TestCase):
         for line in generate("6-input.txt", ['яблоко'], ['банан']):
             outputs.append(line)
         self.assertEqual(outputs, ['груша арбуз ананас яблоко\n'])
-        

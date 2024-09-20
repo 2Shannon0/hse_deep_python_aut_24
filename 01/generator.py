@@ -7,7 +7,7 @@ def generate(
     stop_word_list: List[str],
 ):
 
-    with open(input_file_path, "r") as file1:
+    with open(input_file_path, "r", encoding='UTF-8') as file1:
         for line in file1:
             words_of_line = line.lower().split()
             if not set(words_of_line).isdisjoint(
