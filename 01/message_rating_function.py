@@ -5,6 +5,9 @@ class SomeModel:
     def __init__(self, input_i):
         self.input = input_i
 
+    def get_input(self) -> str:
+        pass  # исправление Too few public methods (1/2) pylint error
+
     def predict(self, message: str = None, test_number: int = None) -> float:
         if message is None:
             message = self.input
@@ -31,7 +34,6 @@ def predict_message_mood(
     predict = model.predict(message, test_number)
     if predict < bad_thresholds:
         return "неуд"
-    elif predict >= good_thresholds:
+    if predict >= good_thresholds:
         return "отл"
-    else:
-        return "норм"
+    return "норм"
