@@ -2,7 +2,7 @@ import unittest
 from lru_cache import LRUCache
 
 
-class TestCustomList(unittest.TestCase):
+class TestLRUCache(unittest.TestCase):
     def test1_set(self):
         cache = LRUCache(2)
         cache.set("k1", "val1")
