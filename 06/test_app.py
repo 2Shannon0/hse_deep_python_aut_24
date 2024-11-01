@@ -35,7 +35,7 @@ class TestClient(unittest.TestCase):
     @patch('builtins.open',
            new_callable=unittest.mock.mock_open,
            read_data='http://example.com\nhttp://example.org\n')
-    def test_load_urls(self):
+    def test_load_urls(self, _):
         client = Client('fake_file.txt', 2, 'localhost', 8000)
         expected_urls = ['http://example.com', 'http://example.org']
         self.assertEqual(client.urls, expected_urls)
