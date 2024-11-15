@@ -50,6 +50,20 @@ async def test_fetch_and_analyze():
                           "{'раму': 3}")
 
 
+@pytest.mark.asyncio
+async def test_process_urls():
+    fetcher = UrlFetcher(max_count_requests=2)
+    urls = [
+        'https://simple.wikipedia.org/wiki/JavaScript',
+        'https://ru.wikipedia.org/wiki/python',
+        'https://simple.wikipedia.org/wiki/apple']
+    with patch.object(fetcher, "fetch_and_analyze",
+                      return_value='mock message') as mocked_method:
+        await fetcher.process_urls(urls, 10)
+
+        assert mocked_method.call_count == len(urls)
+
+
 def test_load_urls():
     expected_output = ['https://simple.wikipedia.org/wiki/JavaScript',
                        'https://ru.wikipedia.org/wiki/python',
