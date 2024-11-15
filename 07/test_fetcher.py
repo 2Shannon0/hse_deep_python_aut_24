@@ -1,5 +1,5 @@
 from unittest.mock import AsyncMock, patch
-from fetcher import UrlFetcher
+from fetcher import UrlFetcher, load_urls
 import aiohttp
 import pytest
 
@@ -48,3 +48,11 @@ async def test_fetch_and_analyze():
         result = await fetcher.fetch_and_analyze(None, 'http://example.ru', 1)
         assert result == ("URL: http://example.ru\nТоп 1 частых слов: " +
                           "{'раму': 3}")
+
+
+def test_load_urls():
+    expected_output = ['https://simple.wikipedia.org/wiki/JavaScript',
+                       'https://ru.wikipedia.org/wiki/python',
+                       'https://simple.wikipedia.org/wiki/apple']
+    result = load_urls("./07/test_urls.txt")
+    assert result == expected_output
