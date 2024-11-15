@@ -12,7 +12,7 @@ class UrlFetcher:
         self.failed_urls = []
         self.success_urls = []
 
-    async def fetch_url(self, session: aiohttp.ClientSession, url) -> str:
+    async def fetch_url(self, session, url) -> str:
         try:
             async with self.semaphore:
                 async with session.get(url, timeout=10) as response:
@@ -42,13 +42,16 @@ class UrlFetcher:
     async def fetch_and_analyze(
             self, session: aiohttp.ClientSession,
             url: str, top_k: int):
+        message = ''
         content = await self.fetch_url(session, url)
         if content:
             analysis = self.get_top_words(content, top_k)
             self.success_urls.append(url)
-            print(f"URL: {url}\nТоп {top_k} частых слов: {analysis}")
+            message = f"URL: {url}\nТоп {top_k} частых слов: {analysis}"
+            print(message)
         self.total_processed += 1
         print(f"Обработано URL адресов: {self.total_processed}")
+        return message
 
 
 def load_urls(url_file):
