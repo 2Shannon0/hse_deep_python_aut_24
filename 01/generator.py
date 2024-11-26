@@ -11,16 +11,23 @@ def generate(
 
     if isinstance(input_file, str):
         with open(input_file, "r", encoding='UTF-8') as open_file:
-            file = open_file.read()
+            for line in open_file:
+                words_of_line = set(line.lower().split())
+
+                if not words_of_line.isdisjoint(
+                    search_word_list
+                ) and words_of_line.isdisjoint(
+                    stop_word_list
+                ):
+                    yield line
     else:
         file = input_file
+        for line in file:
+            words_of_line = set(line.lower().split())
 
-    for line in file:
-        words_of_line = set(line.lower().split())
-
-        if not words_of_line.isdisjoint(
-            search_word_list
-        ) and words_of_line.isdisjoint(
-            stop_word_list
-        ):
-            yield line
+            if not words_of_line.isdisjoint(
+                search_word_list
+            ) and words_of_line.isdisjoint(
+                stop_word_list
+            ):
+                yield line
