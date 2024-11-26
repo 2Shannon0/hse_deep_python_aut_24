@@ -9,11 +9,12 @@ class Node:
 
 class LRUCache:
     def __init__(self, limit=42):
+        if limit < 0:
+            raise ValueError('Лимит не может быть отрицательным.')
         self.limit = limit
         self.cache = {}
         self.head = None
         self.last = None
-        self.size = 0
 
     def get(self, key):
         if key not in self.cache:
@@ -34,14 +35,12 @@ class LRUCache:
             self._update_head(node)
         else:
             new_node = Node(key, value)
-            if self.size == self.limit:
+            if len(self.cache) == self.limit:
                 del self.cache[self.last.key]
                 self._remove_node(self.last)
-                self.size -= 1
 
             self._update_head(new_node)
             self.cache[key] = new_node
-            self.size += 1
 
     def _remove_node(self, node):
         if node.prev:
