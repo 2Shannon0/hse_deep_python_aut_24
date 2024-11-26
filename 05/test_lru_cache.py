@@ -76,6 +76,7 @@ class TestLRUCache(unittest.TestCase):
         cache.set("k4", "val4")
 
         self.assertEqual(cache["k1"], "777")
-        self.assertEqual(cache["k2"], None) # вытес не измененный ранее элемент
+        # вытеснен не измененный ранее элемент
+        self.assertEqual(cache["k2"], None)
         self.assertEqual(cache["k3"], "val3")
         self.assertEqual(cache["k4"], "val4")
