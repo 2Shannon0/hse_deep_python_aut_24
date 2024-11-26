@@ -9,11 +9,9 @@ def generate(
     search_word_list = {word.lower() for word in search_word_list}
     stop_word_list = {word.lower() for word in stop_word_list}
 
-    file_open = False
-
     if isinstance(input_file, str):
-        file = open(input_file, "r", encoding='UTF-8')
-        file_open = True
+        with open(input_file, "r", encoding='UTF-8') as open_file:
+            file = open_file.read()
     else:
         file = input_file
 
@@ -26,6 +24,3 @@ def generate(
             stop_word_list
         ):
             yield line
-
-    if file_open:
-        file.close()
