@@ -4,6 +4,7 @@ import time
 import weakref
 from io import StringIO
 import pstats
+from memory_profiler import profile
 
 
 class TypecalInfo:
@@ -42,6 +43,7 @@ class WeakRefDevice:
         self._info = weakref.ref(value)
 
 
+@profile
 def create_device_instances(cur_cls, count):
     return [cur_cls(f"SN{i}",
                     TypecalInfo(100 * i,
@@ -57,12 +59,14 @@ def measure_time(func, *args, **kwargs):
     return end_time - start_time
 
 
+@profile
 def test_device_access(instances):
     for instance in instances:
         _ = instance.name
         _ = instance.info
 
 
+@profile
 def test_device_modify(instances):
     for instance in instances:
         instance.name = "NewName"
