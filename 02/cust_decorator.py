@@ -65,14 +65,15 @@ def retry_deco(
                             "attempt": attempt,
                             "exception": e
                         })
-                        return None
+                        raise e
                     to_log(func.__name__, {
                         "args": args,
                         "kwargs": kwargs,
                         "attempt": attempt,
                         "exception": e
                     })
-            return None
+                    save_exception = e
+            raise save_exception
         return wrapper
     return decorator
 
