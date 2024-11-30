@@ -113,7 +113,6 @@ slotted_device_modify_time = measure_time(test_device_modify,
 weakref_device_modify_time = measure_time(test_device_modify,
                                           weakref_device_instances)
 
-# Запись результатов
 device_results["Device_access"] = device_access_time
 device_results["SlottedDevice_access"] = slotted_device_access_time
 device_results["WeakRefDevice_access"] = weakref_device_access_time
@@ -123,11 +122,9 @@ device_results["WeakRefDevice_modify"] = weakref_device_modify_time
 
 profiler.disable()
 
-# Печать профиля
 s = StringIO()
 ps = pstats.Stats(profiler, stream=s).sort_stats('cumulative')
 ps.print_stats()
 print(s.getvalue())
 
-# Выводим результаты
 print(device_results)
