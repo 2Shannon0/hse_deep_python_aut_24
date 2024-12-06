@@ -18,8 +18,7 @@ class LRUCache:
                 "INIT: Попытка создания LRUCaсhe с отрицательным лимитом: '%s'",
                 limit
             )
-            # raise ValueError('Лимит не может быть отрицательным.')
-            return
+            raise ValueError('Лимит не может быть отрицательным.')
         self.limit = limit or 0
         self.cache = {}
         self.head = None
@@ -69,12 +68,19 @@ class LRUCache:
             node.prev.next = node.next
         else:
             self.head = node.next
+            logging.debug(
+                "Новая голова списка:  ключ-'%s', значение-'%s'.",
+                node.next.key, node.next.value
+                )
 
         if node.next:
             node.next.prev = node.prev
         else:
             self.last = node.prev
-
+            logging.debug(
+                "Новый конец списка:  ключ-'%s', значение-'%s'.",
+                node.prev.key, node.prev.value
+                )
         node.prev = node.next = None
 
     def _update_head(self, node):
@@ -83,9 +89,16 @@ class LRUCache:
         if self.head:
             self.head.prev = node
         self.head = node
-
+        logging.debug(
+                "Новая голова списка:  ключ-'%s', значение-'%s'.",
+                node.key, node.value
+                )
         if self.last is None:
             self.last = node
+            logging.debug(
+                "Новый конец списка:  ключ-'%s', значение-'%s'.",
+                node.key, node.value
+                )
 
     def __getitem__(self, key):
         return self.get(key)
@@ -119,10 +132,10 @@ def setup_logger(stdout, add_filter):
         logger.addHandler(stream_handler)
 
     if add_filter:
-        class INFOFilter(logging.Filter):
+        class NoDEBUGFilter(logging.Filter):
             def filter(self, record):
-                return record.levelname == "INFO"
-        logger.addFilter(INFOFilter())
+                return record.levelname != "DEBUG"
+        logger.addFilter(NoDEBUGFilter())
 
 
 def main():
@@ -133,10 +146,11 @@ def main():
 
     setup_logger(stdout=args.s, add_filter=args.f)
 
-    cache1 = LRUCache(limit=2)
+    cache1 = LRUCache(limit=3)
     cache1.set("a", 1)
     cache1.set("b", 2)
     cache1.set("c", 3)
+    cache1.set("d", 4)
     cache1.get("b")
     cache1.get("a")
     cache1.set("b", 22)
