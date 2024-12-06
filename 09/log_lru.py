@@ -3,6 +3,8 @@ import logging
 import argparse
 
 
+# (повторяющиеся строки из дз по LRUCache"
+# pylint: disable=R0801
 class Node:
     def __init__(self, key, value):
         self.key = key
@@ -14,6 +16,7 @@ class Node:
 class LRUCache:
     def __init__(self, limit=42):
         if limit < 0:
+            # pylint: enable=R0801
             logging.error(
                 "INIT: Попытка создания LRUCaсhe с отрицательным лимитом: '%s'",
                 limit
